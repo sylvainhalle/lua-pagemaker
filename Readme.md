@@ -5,8 +5,7 @@ lua-pagemaker: Magazine-Style Page Layouts in Pure LaTeX
 
 `lua-pagemaker` is a lightweight Lua-driven layout engine for LaTeX, built on top of the excellent but notoriously rigid `flowfram` package. Its purpose is simple:
 
-> Bring LaTeX closer to Adobe InDesign or Aldus PageMaker  
-> while preserving the simplicity and portability of TeX.
+> Bring LaTeX closer to Adobe InDesign or Aldus PageMaker while preserving the simplicity and portability of TeX.
 
 With a small declarative DSL written in Lua, you can describe page geometry, arbitrary column structures (including variable-width columns), and static boxes such as figures, banners, pull quotes, or sidebars. During compilation, Lua computes all frame coordinates and emits the corresponding `flowfram` primitives.
 
@@ -23,7 +22,7 @@ The result:
 
 The repository includes an example very close to a pixel-perfect reproduction of a layout from the [*IEEE Spectrum* magazine](https://spectrum.ieee.org/magazine/2025/december/).
 
-[![Screenshot](Example/Preview.jpg?raw=true)](Example/paper.pdf)
+[![Screenshot](Example/Preview.jpg?raw=true)](Example/paper.pdf?raw=true)
 
 You can generate pages containing:
 
