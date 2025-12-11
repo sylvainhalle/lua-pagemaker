@@ -1,6 +1,8 @@
 lua-pagemaker: Magazine-Style Page Layouts in Pure LaTeX
 ======================================================
 
+[![Screenshot](Example/Preview.jpg?raw=true)](Example/paper.pdf?raw=true)
+
 **Did you know you can reproduce an IEEE *Spectrum*-style page layout in pure LaTeX?**
 
 `lua-pagemaker` is a lightweight Lua-driven layout engine for LaTeX, built on top of the excellent but notoriously rigid `flowfram` package. Its purpose is simple:
@@ -20,9 +22,7 @@ The result:
 
 ## Example: an IEEE *Spectrum*-like page
 
-The repository includes an example very close to a pixel-perfect reproduction of a layout from the [*IEEE Spectrum* magazine](https://spectrum.ieee.org/magazine/2025/december/).
-
-[![Screenshot](Example/Preview.jpg?raw=true)](Example/paper.pdf?raw=true)
+The repository includes an example very close to a pixel-perfect reproduction of a layout from the [*IEEE Spectrum* magazine](https://spectrum.ieee.org/magazine/2025/december/) (see image above).
 
 You can generate pages containing:
 
