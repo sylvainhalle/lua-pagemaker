@@ -297,6 +297,6 @@ You are free to use, modify, and distribute.
 ## Acknowledgements
 
 - Hans Hagen and the LuaTeX team  
-- Paul Isambert for `flowfram`  
+- Nicola Talbot for `flowfram`  
 - The Lua community  
 - Everyone who wants LaTeX to behave a little more like a real DTP engine
