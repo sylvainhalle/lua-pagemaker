@@ -5,20 +5,28 @@ lua-pagemaker: Magazine-Style Page Layouts in Pure LaTeX
 
 **Did you know you can reproduce an IEEE *Spectrum*-style page layout in pure LaTeX?**
 
-`lua-pagemaker` is a lightweight Lua-driven layout engine for LaTeX, built on top of the excellent but notoriously rigid `flowfram` package. Its purpose is simple:
+Why lua-pagemaker?
 
-> Bring LaTeX closer to Adobe InDesign or Aldus PageMaker while preserving the simplicity and portability of TeX.
+LaTeX excels at structure, mathematics, and text composition — but page layout remains rigid.
 
-With a small declarative DSL written in Lua, you can describe page geometry, arbitrary column structures (including variable-width columns), and static boxes such as figures, banners, pull quotes, or sidebars. During compilation, Lua computes all frame coordinates and emits the corresponding `flowfram` primitives.
+Even with advanced packages, creating designed, magazine-style layouts (multiple columns of arbitrary widths, figures spanning columns, sidebars, banners) is difficult and often fragile. Most solutions rely on floats and heuristics, which makes precise layout control hard to achieve and hard to reproduce.
 
-The result:
+lua-pagemaker addresses this gap by separating concerns:
 
-- multi-column layouts (per page, with variable widths)
-- figures spanning multiple columns
-- top banners, sidebars, bottom callouts
-- decorative rules drawn with TikZ
-- predictable geometry
-- pure LaTeX + LuaLaTeX, no external tools
+- Lua computes page geometry deterministically.
+- LaTeX flows text into precomputed frames.
+- No floats, no guessing, no page-breaking heuristics.
+
+Each page is described declaratively in a small Lua DSL. At compile time, Lua computes all frame coordinates and emits the corresponding flowfram primitives. LaTeX then behaves like a DTP engine: text flows into fixed regions exactly as specified.
+
+The goal is predictable, reproducible, magazine-style layout: closer in spirit to Aldus PageMaker or InDesign than to newspaper-style balancing.
+
+This approach is especially useful for:
+
+- magazine articles
+- research papers with complex layouts
+- documents mixing text, code, screenshots, and diagrams
+- situations where exact geometry matters more than automatic balancing
 
 ## Example: an IEEE *Spectrum*-like page
 
@@ -32,8 +40,68 @@ You can generate pages containing:
 - bottom-aligned figures
 - decorative horizontal and vertical rules
 
-*(Screenshot placeholder: e.g. `fig/spectrum-example.png`.)*
+## Quick Start
 
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/sylvainhalle/lua-pagemaker.git
+cd lua-pagemaker
+```
+
+### 2. Compile the example
+
+```bash
+lualatex example.tex
+```
+
+You must use **LuaLaTeX**.
+
+### 3. Modify `pages.lua`
+
+Adjust pages, columns, static boxes, and decorative rule positions.
+
+### Example page configuration
+
+```lua
+return {
+  width  = 7.88,
+  height = 10.75,
+  left   = 0.5,
+  right  = 0.75,
+  top    = 0.5,
+  bottom = 0.75,
+
+  colsep    = 0.25,
+  figtop    = 0,
+  figbottom = 0.5,
+
+  pages = {
+    {
+      cols = 2,
+      boxes = {
+        { name="topbanner", colfrom=1, colto=2,
+          top=0, h=3.875 }
+      }
+    },
+
+    {
+      cols = 3,
+      boxes = {
+        { name="guifig", colfrom=2, colto=3,
+          top=0,
+          image="fig/GUI_pipe.png",
+          label="fig:bbgui",
+          figbottom=1,
+          caption="A pipeline in BeepBeep Studio" },
+
+        { name="code-examples", colfrom=1, colto=2,
+          bottom=0, h=2.5 }
+      }
+    }
+  }
+}
+```
 
 ## Core Ideas
 
@@ -205,72 +273,6 @@ Your TeX file defines the content of static boxes:
 ```
 
 Then you write the body text normally. It automatically flows into whatever frames the Lua layer defined.
-
----
-
-## Quick Start
-
-### 1. Clone the repository
-
-```bash
-git clone https://github.com/sylvainhalle/lua-pagemaker.git
-cd lua-pagemaker
-```
-
-### 2. Compile the example
-
-```bash
-lualatex example.tex
-```
-
-You must use **LuaLaTeX**.
-
-### 3. Modify `pages.lua`
-
-Adjust pages, columns, static boxes, and decorative rule positions.
-
-### Example page configuration
-
-```lua
-return {
-  width  = 7.88,
-  height = 10.75,
-  left   = 0.5,
-  right  = 0.75,
-  top    = 0.5,
-  bottom = 0.75,
-
-  colsep    = 0.25,
-  figtop    = 0,
-  figbottom = 0.5,
-
-  pages = {
-    {
-      cols = 2,
-      boxes = {
-        { name="topbanner", colfrom=1, colto=2,
-          top=0, h=3.875 }
-      }
-    },
-
-    {
-      cols = 3,
-      boxes = {
-        { name="guifig", colfrom=2, colto=3,
-          top=0,
-          image="fig/GUI_pipe.png",
-          label="fig:bbgui",
-          figbottom=1,
-          caption="A pipeline in BeepBeep Studio" },
-
-        { name="code-examples", colfrom=1, colto=2,
-          bottom=0, h=2.5 }
-      }
-    }
-  }
-}
-```
-
 
 ## Limitations
 
